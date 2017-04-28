@@ -1,12 +1,13 @@
 
 import request from 'superagent'
 
-const dataService = store => next => action => {
+const dataService = ({ getState }) => next => action => {
+	const state = getState();
 	next(action)
 	switch (action.type) {
 	case 'GET_DATA':
 		request
-			.get('/test.json')
+			.get('/test.json?text=' + (state.filter || ''))
 			.end((err, res) => {
 				if (err) {
 					console.log(err)
@@ -17,6 +18,7 @@ const dataService = store => next => action => {
 				}
 				const data = JSON.parse(res.text)
 				next({
+					...action,
 					type: action.responseType,
 					data
 				})

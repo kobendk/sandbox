@@ -2,12 +2,11 @@ import {
 	connect
 } from 'react-redux'
 
+import dataSelector from '../selectors/data-selector';
 import ItemList from '../components/ItemList'
 
-const getItemList = (items) => items;
-
 const mapStateToProps = (state) => ({
-	items: getItemList(state.items),
+	items: dataSelector(state),
   loading: state.loading
 })
 
